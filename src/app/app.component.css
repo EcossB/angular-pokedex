@@ -1,0 +1,17 @@
+
+.encabezado{
+    font-size: 30px;
+}
+a{
+    color: #ffffff;
+    font-size: larger;
+}
+
+.container-fluid{
+    padding-right: 10px;
+}
+
+.navbar{
+    flex-wrap: unset;
+    padding-right: 10px;
+}
