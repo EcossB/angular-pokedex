@@ -20,20 +20,19 @@
 <!--Contenedor principal de imagenes-->
 <!--Este contenedor es el que contenera la imagen, id, nombre del pokemon
     Y al que le hare un For para que se despliegue en toda la pagina.-->
-<div class="contenedor-pokemones">
+<div class="contenedor-pokemones" *ngFor="let pokemon of pokemons">
 
   <!--Imagen del pokemon.-->
   <div class="img-pokemon">
-    <img src="../assets/pokedex.png" alt="" width="210" height="210">
-    <p class="num-pokemon">N.° 001 </p> 
+    <img src="http://172.24.0.152/JSON/DATA/images/{{pokemon.stid}}.png" alt="" width="210" height="210">
+    <p class="num-pokemon">N.° {{pokemon.id}} </p> 
   </div>
 
   <!--Id, nombre, tipo, y base-->
   <div class="data-pokemon">
-      <p class="name-pokemon">Bulbasur </p>
+      <p class="name-pokemon">{{pokemon.name.english}} </p>
       <ul class="type-pokemon">
-        <li>Grass</li>
-        <li>Poison</li>
+        <li>{{pokemon.type}}</li>
       </ul>
   </div>
 
