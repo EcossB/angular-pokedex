@@ -15,3 +15,12 @@ a{
     flex-wrap: unset;
     padding-right: 10px;
 }
+
+.contenedor-pokemones{
+    width: 350px;
+    height: 350px;
+    background-color: black;
+    display: inline-block;
+    margin: 60px 70px 10px;
+    border-radius: 25px;
+}
