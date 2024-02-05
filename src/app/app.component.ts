@@ -119,13 +119,19 @@ export class AppComponent implements OnInit{
     .subscribe({
       next: (response: any) => {
         this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
+        console.log(this.pokemons);
+
+        (this.pokemons.length === 0) ? (alert("Pokemon No encontrado"),  window.location.reload()) : alert("Pokemon Encontrado");
       },
       error: (error) => {
         console.log("Error de conexion ", error);
       }
-    })
-
+    });
   }
+
+  reloadPage() {
+    window.location.reload();
+    }
 
 
   onScrollUp(){
