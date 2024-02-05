@@ -23,7 +23,13 @@ a{
     display: inline-block;
     margin: 60px 70px 10px;
     border-radius: 25px;
-    border: #2CA01B;
+    border: #198754;
+    border-style: double;
+}
+
+.contenedor-pokemones:hover{
+    cursor: pointer;
+    border: #2bd211;
     border-style: double;
 }
 
