@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 /**
  * *Json body. and example of the data that is coming.
@@ -50,7 +51,7 @@ import { FormsModule } from '@angular/forms';
 
   interface Pokemon{
     id: number,
-    stid: string,
+    //stid: string,
     name: Name,
     type: string[],
     base: Base
@@ -60,7 +61,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule],
+  imports: [CommonModule, RouterOutlet, FormsModule, InfiniteScrollModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -68,6 +69,8 @@ export class AppComponent implements OnInit{
   title = 'Pokedex';
 
   pokemons :Pokemon[] = [];
+  idIncrement : number = 6;
+  nombrePokemon!: string ;
 
   constructor(public http: HttpClient){}
 
@@ -76,22 +79,57 @@ export class AppComponent implements OnInit{
     .subscribe({
       next: (response: any) => {
         console.log(response);
-        this.pokemons = response;
-
-        //cosa hecha por asarias.
-        for (let index = 0; index < 100; index++) {
-          let stid:string="";
-          stid=parseInt(response[index].id,10).toLocaleString('en-US', {minimumIntegerDigits: 3, useGrouping:false})
-          console.log(stid);
-         // let pokemons :Pokemon[] = [{id: response[index].id,stid: response[index].stid,name:response[index].name,type:response[index].type,base:response[index].base}];
-          this.pokemons.push({id: response[index].id,stid: stid,name:response[index].name,type:response[index].type,base:response[index].base});
-        }
-
+        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 6);
       },
       error: (error) => {
         console.log("Error de conexion ", error);
       }
     })
+  }
+
+  padNumberImg(id: number) {
+    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+  }
+
+
+  onScroll(){
+
+    this.idIncrement += 6;
+
+    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+    .subscribe({
+      next: (response: any) => {
+        //console.log(response);
+        this.pokemons = response.filter((obj:Pokemon) => obj.id <= this.idIncrement);
+      }});
+  }
+
+
+
+  captilizeString(name: string) :string{
+      return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+
+  searchPokemon(namep :string){
+
+    console.log(this.captilizeString(namep));
+
+    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+    .subscribe({
+      next: (response: any) => {
+        this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
+      },
+      error: (error) => {
+        console.log("Error de conexion ", error);
+      }
+    })
+
+  }
+
+
+  onScrollUp(){
+    alert('Estas en el tope.')
   }
 
   ngOnInit(): void {
