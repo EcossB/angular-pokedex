@@ -1,0 +1,51 @@
+<!--Creacion de un navbar, el cual tendra el titulo de pokedex y tendra un campo para buscar por id.-->
+
+<div class="encabezado">
+    <header>
+      <nav class="navbar navbar-light bg-danger bg-">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" (click)="reloadPage()">
+            <img src="../assets/favicon (2).ico" alt="" width="48" height="42 "  class="d-inline-block align-text-top">
+            Pokedex
+          </a>
+          <form action="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" [(ngModel)]="nombrePokemon" [ngModelOptions]="{ standalone: true }" >
+          </form>
+        </div>
+        <button class="btn btn-success" (click)="searchPokemon(nombrePokemon)" >Search</button>
+      </nav>
+    </header>
+  </div>
+  
+  <!--Contenedor principal de imagenes-->
+  <!--Este contenedor es el que contenera la imagen, id, nombre del pokemon
+      Y al que le hare un For para que se despliegue en toda la pagina.-->
+  <section infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollUpDistance]="2"
+    [infiniteScrollThrottle]="50" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
+  
+    <div class="contenedor-pokemones" *ngFor="let pokemon of pokemons" [routerLink]="['/descripcion']" routerLinkActive="router-link-active" >
+  
+      <!--Imagen del pokemon.-->
+      <div class="img-pokemon">
+        <!-- <img src="http://172.24.0.152/JSON/DATA/images/{{pokemon.id}}.png" alt="" width="210" height="210"> -->
+        <img [src]="padNumberImg(pokemon.id)" alt="" width="210" height="210">
+        <p class="num-pokemon">N.° {{pokemon.id}} </p> 
+      </div>
+  
+      <!--Id, nombre, tipo, y base-->
+      <div class="data-pokemon">
+          <p class="name-pokemon">{{pokemon.name.english}} </p>
+          <ul class="type-pokemon">
+            <li>{{pokemon.type[0]}}</li>
+            <li>{{pokemon.type[1]}}</li>
+          </ul>
+      </div>
+  
+    </div>
+  </section>
+  
+  
+  
+  
+  
+  
