@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './description.component.css'
 })
 export class DescriptionComponent {
+  title = 'Description'
 
 }
