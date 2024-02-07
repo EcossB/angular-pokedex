@@ -1,3 +1,6 @@
+
+<!--Mismo navbar para la descripcion solamente sin el search-->
+
 <div class="encabezado">
     <header>
       <nav class="navbar navbar-light bg-danger bg-">
@@ -10,3 +13,61 @@
       </nav>
     </header>
   </div>
+
+
+<!--Html para el contenedor del , el contenedor de los datos y el contenedor de los ataques.-->
+
+
+<!--contenedor de la imagen del -->
+<div class="descripcion-container">
+  
+  <div class="img-pokemon">
+
+    <img class="imgPokemon" [src]="padNumberImg(pokemon.id)" alt="" width="350" height="350">
+
+  </div>
+
+  <!--contenedor de datos del pokemon <p class="name-pokemon">{{pokemon.name.english}}</p>-->
+  <div class="pokemon-data">
+      <p class="title">Datos del pokemon.</p>
+
+      <p class="pokemonId" [innerText]="padNumberId(pokemon.id)"></p>
+
+      <p class="subtitle">Nombres en Diferente Idiomas:</p>
+      <ul class="namePokemon">
+        <li class="lipokemon">{{pokemon.name.english}}</li>
+        <li class="lipokemon">{{pokemon.name.french}}</li>
+        <li class="lipokemon">{{pokemon.name.japanese}}</li>
+      </ul>
+
+      <p class="subtitle" >Tipo: </p>
+      <ul class="type-pokemon">
+        <li>{{pokemon.type[0]}}</li>
+        <li>{{pokemon.type[1]}}</li>
+      </ul>
+
+  </div>
+
+  <div class="sprites">
+    <img [src]="padNumberSprite(pokemon.id)" alt="">
+  </div>
+
+  <!--Contenedor de las estadisticas de ataque del pokemon.-->
+  <div class="pokemon-stats">
+        <ngx-charts-advanced-pie-chart  
+        [view]="view"
+        scheme="fire"
+        [results]="single"
+        [gradient]="gradient"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+        >
+        </ngx-charts-advanced-pie-chart>
+  </div>
+</div>
+
+
+
+
+
