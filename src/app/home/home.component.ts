@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DescriptionComponent } from '../description/description.component';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { PokemonServiceService } from '../pokemon-service.service';
 
 
 /**
@@ -34,7 +34,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   }
  */
 
-
   type Name ={
     english: string,
     japanese: string,
@@ -52,7 +51,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   }
 
 
-  interface Pokemon{
+export interface Pokemon{
     id: number,
     //stid: string,
     name: Name,
@@ -89,26 +88,24 @@ export class HomeComponent implements OnInit{
   };
 
   pokemons :Pokemon[] = [];
+
   idIncrement : number = 6;
-  nombrePokemon!: string ;
-  private pokemon$ = new BehaviorSubject<Pokemon>(this.initPokemon);
 
-  constructor(public http: HttpClient){}
+  pokemonSelected = this.selectPokemon
+  nombrePokemon!: string;
 
+  selection!: Pokemon;
 
-  getSelectedPokemon$(): Observable<Pokemon>{
-    return this.pokemon$.asObservable();
-  }
+  constructor(public http: HttpClient,
+    private servicionPokemon: PokemonServiceService,
+    private router: Router){}
 
-  setPokemon(pokemon: Pokemon):void{
-    this.pokemon$.next(pokemon);
-  }
 
   callData(){
     this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
     .subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.pokemons = response.filter((obj:Pokemon) => obj.id <= 6);
       },
       error: (error) => {
@@ -119,6 +116,10 @@ export class HomeComponent implements OnInit{
 
   padNumberImg(id: number) {
     return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+  }
+
+  padNumberId(id: number){
+    return `N.° ${String(id).padStart(3,'0')}`;
   }
 
 
@@ -151,7 +152,7 @@ export class HomeComponent implements OnInit{
         this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
         console.log(this.pokemons);
 
-        (this.pokemons.length === 0) ? (alert("Pokemon No encontrado"),  window.location.reload()) : alert("Pokemon Encontrado");
+        (this.pokemons.length === 0) ? (alert("Pokemon No encontrado"),  window.location.reload()) : console.log("Pokemon Encontrado");
       },
       error: (error) => {
         console.log("Error de conexion ", error);
@@ -159,17 +160,31 @@ export class HomeComponent implements OnInit{
     });
   }
 
+
+  selectPokemon(datosPokemon: Pokemon): void{
+   // console.log(datosPokemon);
+    // this.initPokemon = datosPokemon;
+    // console.log("init pokemon:",this.initPokemon);
+    // this.router.navigate(['/descripcion']);
+    // this.servicionPokemon.disparadorPokemon.emit({data: datosPokemon});
+    this.servicionPokemon.setPokemon(datosPokemon);
+    
+  }
+
+
   reloadPage() {
     window.location.reload();
     }
 
 
   onScrollUp(){
-    alert('Estas en el tope.')
+    console.log('Estas en el tope.');
   }
 
   ngOnInit(): void {
+    this.servicionPokemon.selectedPokemon$.subscribe(pokemon => this.selection = pokemon)
     this.callData();
   }
+
 }
 
