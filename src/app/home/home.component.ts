@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit{
 
   pokemons :Pokemon[] = [];
 
-  idIncrement : number = 10;
+  idIncrement : number = 14;
 
   pokemonSelected = this.selectPokemon
   nombrePokemon!: string;
@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit{
     .subscribe({
       next: (response: any) => {
         //console.log(response);
-        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 20);
+        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 25);
       },
       error: (error) => {
         console.log("Error de conexion ", error);
