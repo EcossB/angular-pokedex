@@ -126,7 +126,7 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
 
     this.selectedPokemon$.subscribe((data) => {
 
-    console.log(this.callMoves(data.type))
+    this.callMoves(data.type);
 
     this.single = [
       {
