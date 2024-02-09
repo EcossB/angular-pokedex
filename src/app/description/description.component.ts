@@ -51,26 +51,33 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
   constructor(private servicionPokemon: PokemonServiceService,
     public http : HttpClient,
     private changeDetectorRef: ChangeDetectorRef){
-    
+
   }
 
 
 
   padNumberImg(id: number): string {
-    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+    //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
+  //return de las imagenes con la url local return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+    return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
   }
 
   padNumberId (id: number): string{
     return `N.° ${String(id).padStart(3,'0')}`;
   }
-  
+
   padNumberSprite(id: number):string {
-    return `http://172.24.0.152/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`;
+
+    //return `http://127.0.0.1/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`; url de mi casa.
+    // `http://172.24.0.152/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`; url de mi servidor
+    return `http://127.0.0.1/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`;
   }
 
 
   callMoves(type: string[]):void{
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json')
+        // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json
+    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=moves.json
+    this.http.get('http://127.0.0.1/JSON/DATA/getjson.php?js=moves.json')
     .subscribe({
       next: (response: any) =>{
         //console.log(response);

@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit{
 
   pokemons :Pokemon[] = [];
 
-  idIncrement : number = 14;
+  idIncrement : number = 65;
 
   pokemonSelected = this.selectPokemon
   nombrePokemon!: string;
@@ -120,7 +120,8 @@ export class HomeComponent implements OnInit{
     .subscribe({
       next: (response: any) => {
         //console.log(response);
-        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 25);
+        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 65);
+        console.log(this.pokemons)
       },
       error: (error) => {
         console.log("Error de conexion ", error);
@@ -130,7 +131,8 @@ export class HomeComponent implements OnInit{
 
   padNumberImg(id: number) {
     //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
-    return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; //return de las imagenes con la url local
+  //return de las imagenes con la url local return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+    return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
   }
 
   padNumberId(id: number){
@@ -142,11 +144,14 @@ export class HomeComponent implements OnInit{
 
     this.idIncrement += 6;
 
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+    // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
+    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
+    this.http.get('http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json')
     .subscribe({
       next: (response: any) => {
         //console.log(response);
         this.pokemons = response.filter((obj:Pokemon) => obj.id <= this.idIncrement);
+        console.log(this.pokemons)
       }});
   }
 
@@ -161,7 +166,9 @@ export class HomeComponent implements OnInit{
 
     console.log(this.captilizeString(namep));
 
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+        // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
+    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
+    this.http.get('http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json')
     .subscribe({
       next: (response: any) => {
         this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
