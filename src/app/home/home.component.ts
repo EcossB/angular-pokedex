@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -76,7 +76,8 @@ export interface Moves{
   standalone: true,
   imports: [CommonModule, RouterOutlet, FormsModule, InfiniteScrollModule, DescriptionComponent, RouterLink],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit{
   title = 'Pokedex';
@@ -116,7 +117,7 @@ export class HomeComponent implements OnInit{
   callData(){
     // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
     //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
-    this.http.get('http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json')
+    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
     .subscribe({
       next: (response: any) => {
         //console.log(response);
@@ -132,7 +133,7 @@ export class HomeComponent implements OnInit{
   padNumberImg(id: number) {
     //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
   //return de las imagenes con la url local return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
-    return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
   }
 
   padNumberId(id: number){
@@ -146,7 +147,7 @@ export class HomeComponent implements OnInit{
 
     // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
     //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
-    this.http.get('http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json')
+    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
     .subscribe({
       next: (response: any) => {
         //console.log(response);
@@ -168,7 +169,7 @@ export class HomeComponent implements OnInit{
 
         // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
     //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
-    this.http.get('http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json')
+    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
     .subscribe({
       next: (response: any) => {
         this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
@@ -184,11 +185,7 @@ export class HomeComponent implements OnInit{
 
 
   selectPokemon(datosPokemon: Pokemon): void{
-   // console.log(datosPokemon);
-    // this.initPokemon = datosPokemon;
-    // console.log("init pokemon:",this.initPokemon);
-    // this.router.navigate(['/descripcion']);
-    // this.servicionPokemon.disparadorPokemon.emit({data: datosPokemon});
+
     this.servicionPokemon.setPokemon(datosPokemon);
 
   }
