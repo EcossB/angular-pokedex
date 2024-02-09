@@ -10,7 +10,7 @@ import { PokemonServiceService } from '../pokemon-service.service';
 
 /**
  * *Json body. and example of the data that is coming.
- * 
+ *
  * {
     "id": 1,
     "name": {
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit{
       french: ''
     },
     type: [],
-    base: { 
+    base: {
       HP: 0,
       Attack: 0,
       Defense: 0,
@@ -102,7 +102,9 @@ export class HomeComponent implements OnInit{
 
 
   callData(){
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+    // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
+    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
+    this.http.get('http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json')
     .subscribe({
       next: (response: any) => {
         //console.log(response);
@@ -115,7 +117,8 @@ export class HomeComponent implements OnInit{
   }
 
   padNumberImg(id: number) {
-    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+    //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
+    return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; //return de las imagenes con la url local
   }
 
   padNumberId(id: number){
@@ -168,7 +171,7 @@ export class HomeComponent implements OnInit{
     // this.router.navigate(['/descripcion']);
     // this.servicionPokemon.disparadorPokemon.emit({data: datosPokemon});
     this.servicionPokemon.setPokemon(datosPokemon);
-    
+
   }
 
 
