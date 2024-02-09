@@ -7,10 +7,14 @@ a{
     font-size: larger;
 }
 
+body{
+    background: rgb(220,53,69);
+    background: linear-gradient(180deg, rgba(220,53,69,1) 12%, rgba(255,255,255,1) 100%);
+}
 
 .descripcion-container{
-    width: 1500px;
-    height: 840px;
+    max-width: auto;
+    min-height: 1081px;
     display: block;
     position: relative;
 }
@@ -24,8 +28,8 @@ a{
     padding: 10px;
     padding-left: 70px;
     margin: 10px;
-    top:  50px;
-    left: 185px;
+    top:  15%;
+    left: 15%;
     border-radius: 15px;
 
 }
@@ -37,14 +41,14 @@ a{
 }
 
 .pokemon-data{
-    width: 350px;
-    height: 400px;
+    width: 600px;
+    height: 415px;
     position: absolute;
     background-color: #30A7D7;
     padding: 10px;
     margin: 10px;
-    left: 900px;
-    top: 60px;
+    left: 55%;
+    top: 15%;
     border-radius: 15px;
 }
 
@@ -54,21 +58,21 @@ a{
     margin: 40px;
     padding-left: 150PX;
     position:absolute;
-    top: 450px;
-    left: 100px;
+    top: 60%;
+    left: 20%;
     border-radius: 15px;
 }
 
 
 .title{
-    font-size: 35px;
+    font-size: 55px;
     margin-top: 10px;
     margin-bottom: 15px;
     font-style: italic;
 }
 
 .subtitle{
-    font-size: 22px;
+    font-size: 30px;
     margin-bottom: 10px;
     font-style: italic;
     font-weight: 600;
@@ -86,7 +90,8 @@ a{
     display: inline-flex;
     background-color: #39c0f5;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 60px;
+    margin: auto 92px;
 }
 
 .lipokemon{
@@ -107,16 +112,22 @@ li{
     display: inline-flex;
     padding: 15px;
     background-color: #39c0f5;
-    border-radius: 10px;
+    border-radius: 60px;
+    margin: auto 17px;
+}
 
+.buttonModal{
+    position: absolute;
+    border-radius: 60px;
+    width: 100px;
 }
 
 .sprites{
     position: relative;
     width: 40px;
     height: 40px;
-    left: 1020px;
-    top: 140px;
+    left: 62%;
+    top: 260px;
 }
 
 .navbar-brand {
@@ -147,4 +158,73 @@ li{
     margin-left: 11px;
 }
 
+.fade:not(.show) {
+    opacity: 1;
+}
 
+.move-container1{
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 1rem;
+
+}
+
+.modal {
+    --bs-modal-zindex: 1055;
+    --bs-modal-width: 500px;
+    --bs-modal-padding: 1rem;
+    --bs-modal-margin: 0.5rem;
+    --bs-modal-color: ;
+    --bs-modal-bg: var(--bs-body-bg);
+    --bs-modal-border-color: var(--bs-border-color-translucent);
+    --bs-modal-border-width: var(--bs-border-width);
+    --bs-modal-border-radius: var(--bs-border-radius-lg);
+    --bs-modal-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --bs-modal-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));
+    --bs-modal-header-padding-x: 1rem;
+    --bs-modal-header-padding-y: 1rem;
+    --bs-modal-header-padding: 1rem 1rem;
+    --bs-modal-header-border-color: var(--bs-border-color);
+    --bs-modal-header-border-width: var(--bs-border-width);
+    --bs-modal-title-line-height: 1.5;
+    --bs-modal-footer-gap: 0.5rem;
+    --bs-modal-footer-bg: ;
+    --bs-modal-footer-border-color: var(--bs-border-color);
+    --bs-modal-footer-border-width: var(--bs-border-width);
+    position: fixed;
+    top: 59px;
+    left: 47px;
+    z-index: var(--bs-modal-zindex);
+    display: none;
+    width: 95%;
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
+
+.modal-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * .5);
+    background-color: var(--bs-modal-footer-bg);
+    border-top: var(--bs-modal-footer-border-width) solid var(--bs-modal-footer-border-color);
+    border-bottom-right-radius: var(--bs-modal-inner-border-radius);
+    border-bottom-left-radius: var(--bs-modal-inner-border-radius);
+    align-content: center;
+    justify-content: flex-start;
+}
+
+.list-moves-1{
+    display: inline-block;
+
+}
+
+.movesContainerFlex{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 1rem;
+}

@@ -46,7 +46,12 @@
         <li>{{pokemon.type[1]}}</li>
       </ul>
 
+      <button (click)="openModal()" class="buttonModal" type="button" class="btn btn-danger" data-bs-toggle="myModal" data-bs-target="#staticBackdrop">
+        Ver movimientos
+      </button>
   </div>
+
+
 
   <div class="sprites">
     <img [src]="padNumberSprite(pokemon.id)" alt="">
@@ -65,7 +70,73 @@
         >
         </ngx-charts-advanced-pie-chart>
   </div>
+  
+  <!-- Modal -->
+  <div
+    #myModal
+    class="modal"
+    id="modalId"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-sm modal-fullscreen"
+      role="document"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">
+            Movimientos que puede aprender el Pokemon.
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="movesContainerFlex">
+            <div class="move-container1" *ngFor="let move of moves1">
+              <ul class="list-moves-1">
+                <li>{{move.ename}}</li>
+              </ul>
+            </div>
+
+            <div class="move-container2" *ngFor="let move of moves2">
+              <ul class="list-moves-1">
+                <li>{{move.ename}}</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
 </div>
+
+
+
+
+
+
 
 
 
