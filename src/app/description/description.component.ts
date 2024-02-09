@@ -1,9 +1,11 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PokemonServiceService } from '../pokemon-service.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient } from '@angular/common/http';
+import { Moves } from '../home/home.component';
 
 type Name ={
   english: string,
@@ -46,8 +48,67 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
   pokemon!: Pokemon;
   selectedPokemon$ = this.servicionPokemon.selectedPokemon$;
 
-  constructor(private servicionPokemon: PokemonServiceService){
+  constructor(private servicionPokemon: PokemonServiceService,
+    public http : HttpClient,
+    private changeDetectorRef: ChangeDetectorRef){
     
+  }
+
+
+
+  padNumberImg(id: number): string {
+    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+  }
+
+  padNumberId (id: number): string{
+    return `N.° ${String(id).padStart(3,'0')}`;
+  }
+  
+  padNumberSprite(id: number):string {
+    return `http://172.24.0.152/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`;
+  }
+
+
+  callMoves(type: string[]):void{
+    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json')
+    .subscribe({
+      next: (response: any) =>{
+        //console.log(response);
+        console.log(response.filter((obj: Moves) => obj.type == type[0]));
+        console.log(response.filter((obj: Moves) => obj.type == type[1]));
+      },
+      error: (error) =>{
+        console.log("Error de conexion para los movimientos", error);
+      }
+    })
+  }
+
+
+  /**
+   * *De aqui en adelante se aplica la logica y para el chart.
+   */
+
+  single!: any[];
+
+  view: [number, number] = [900, 300];
+
+  // options
+  gradient: boolean = true;
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+  isDoughnut: boolean = false;
+
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
 
@@ -64,6 +125,8 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
   ngAfterViewInit(): void {
 
     this.selectedPokemon$.subscribe((data) => {
+
+    this.callMoves(data.type);
 
     this.single = [
       {
@@ -92,45 +155,9 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
       },
     ];
     })
+
+    this.changeDetectorRef.detectChanges();
   }
 
-  padNumberImg(id: number) {
-    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
-  }
-
-  padNumberId (id: number){
-    return `N.° ${String(id).padStart(3,'0')}`;
-  }
-  
-  padNumberSprite(id: number) {
-    return `http://172.24.0.152/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`;
-  }
-
-  /**
-   * *De aqui en adelante se aplica la logica y para el chart.
-   */
-
-  single!: any[];
-
-  view: [number, number] = [900, 300];
-
-  // options
-  gradient: boolean = true;
-  showLegend: boolean = true;
-  showLabels: boolean = true;
-  isDoughnut: boolean = false;
-
-
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
 
 }

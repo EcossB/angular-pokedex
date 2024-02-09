@@ -21,7 +21,8 @@
   <!--Este contenedor es el que contenera la imagen, id, nombre del pokemon
       Y al que le hare un For para que se despliegue en toda la pagina.-->
   <section infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollUpDistance]="2"
-    [infiniteScrollThrottle]="50" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
+    [infiniteScrollThrottle]="50" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()"
+    class="mainContainer" >
   
     <div class="contenedor-pokemones" *ngFor="let pokemon of pokemons" 
      routerLinkActive="router-link-active"
@@ -30,24 +31,16 @@
   
       <!--Imagen del pokemon.-->
 
-      <div class="img-pokemon">
-
         <img [src]="padNumberImg(pokemon.id)" alt="" width="210" height="210">
         <p class="num-pokemon">{{padNumberId(pokemon.id)}}</p> 
 
-      </div>
-  
       <!--Id, nombre, tipo, y base-->
-
-      <div class="data-pokemon">
 
           <p class="name-pokemon">{{pokemon.name.english}} </p>
           <ul class="type-pokemon">
             <li>{{pokemon.type[0]}}</li>
             <li>{{pokemon.type[1]}}</li>
           </ul>
-
-      </div>
   
     </div>
   </section>

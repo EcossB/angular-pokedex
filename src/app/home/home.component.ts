@@ -59,6 +59,18 @@ export interface Pokemon{
     base: Base
   };
 
+export interface Moves{
+  accuracy: number,
+  category: string,
+  cname: string,
+  ename: string,
+  id: number,
+  jname: string,
+  power: number,
+  pp: number,
+  type: string
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -89,7 +101,7 @@ export class HomeComponent implements OnInit{
 
   pokemons :Pokemon[] = [];
 
-  idIncrement : number = 6;
+  idIncrement : number = 14;
 
   pokemonSelected = this.selectPokemon
   nombrePokemon!: string;
@@ -108,7 +120,7 @@ export class HomeComponent implements OnInit{
     .subscribe({
       next: (response: any) => {
         //console.log(response);
-        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 6);
+        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 25);
       },
       error: (error) => {
         console.log("Error de conexion ", error);
@@ -186,8 +198,7 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.servicionPokemon.selectedPokemon$.subscribe(pokemon => this.selection = pokemon)
-    this.callData();
-  }
+    this.callData();  }
 
 }
 
