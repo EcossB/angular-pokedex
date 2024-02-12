@@ -228,3 +228,15 @@ li{
     flex-wrap: wrap;
     gap: 2rem 1rem;
 }
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--bs-modal-padding);
+    width: 108rem;
+}
+
+.modal-fullscreen .modal-footer, .modal-fullscreen .modal-header {
+    border-radius: 0;
+    font-size: x-large;
+}
