@@ -100,6 +100,8 @@ export class HomeComponent implements OnInit{
       Speed: 0}
   };
 
+  userLogged: boolean = false; //si esta falsa esta propiedad es porque el usuario no esta logeado.
+
   pokemons :Pokemon[] = [];
 
   idIncrement : number = 65;

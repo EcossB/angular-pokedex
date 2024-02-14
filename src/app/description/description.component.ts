@@ -59,7 +59,7 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
 
 
   padNumberImg(id: number): string {
-    //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
+  //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
   //return de las imagenes con la url local return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
     return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
   }
@@ -77,15 +77,12 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
 
 
   callMoves(type: string[]):void{
-        // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json
+
+    // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json
     //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=moves.json
     this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json')
     .subscribe({
       next: (response: any) =>{
-        //console.log(response);
-        // console.log(response.filter((obj: Moves) => obj.type == type[0]));
-        // console.log(response.filter((obj: Moves) => obj.type == type[1]));
-
         for(let i = 0; i <= 1; i++){
           
          (i === 0) ? this.moves1 = response.filter((obj: Moves) => obj.type == type[i]) : this.moves2 = response.filter((obj: Moves) => obj.type == type[i]);
