@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserRegister } from './userR.interface';
+import { AuthService } from '../auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -13,6 +15,8 @@ import { UserRegister } from './userR.interface';
 export class SignupComponent {
 
   fb = inject(FormBuilder);
+  authService = inject(AuthService);
+  router = inject(Router);
 
   constructor(public http: HttpClient){}
 
@@ -26,11 +30,13 @@ export class SignupComponent {
 
     onSubmit() {
     this.http.post<{user:UserRegister}>('https://localhost:7033/register', this.formSignUp.getRawValue())
-    .subscribe( response => {
-      console.log('Response ',response);
-    })
-    //console.log(this.formSignUp.getRawValue());
-    }
+    .subscribe((response:any) => {
+      console.log("Response", response);
+      localStorage.setItem('token', response.token);
+      this.authService.currenUserSig.set(response.user); // notificando a toda la app que esta registrado
+      this.router.navigateByUrl('/');
+    });
+    };
 
     reloadPage() {
     window.location.reload();
