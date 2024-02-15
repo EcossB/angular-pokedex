@@ -3,4 +3,5 @@ export interface UserRegister {
     LastName: string;
     Username: string; 
     Password: String;
+    token: string;
 };

@@ -1,5 +1,3 @@
 export interface UserLogin {
-    Username: string;
-    Password: string;
-    Token: string;
+    token: string;
 };
