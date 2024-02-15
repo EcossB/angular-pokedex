@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DescriptionComponent } from '../description/description.component';
 import { PokemonServiceService } from '../pokemon-service.service';
+import { AuthService } from '../auth.service';
+import { UserLogin } from '../login/userL.interface';
 
 
 /**
@@ -80,6 +82,7 @@ export interface Moves{
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit{
+
   title = 'Pokedex';
 
   initPokemon : Pokemon = {
@@ -110,6 +113,8 @@ export class HomeComponent implements OnInit{
   nombrePokemon!: string;
 
   selection!: Pokemon;
+
+  authservice = inject(AuthService);
 
   constructor(public http: HttpClient,
     private servicionPokemon: PokemonServiceService,
@@ -185,6 +190,10 @@ export class HomeComponent implements OnInit{
     });
   }
 
+  logout() {
+    localStorage.setItem('token', '');
+    this.authservice.currenUserSig.set(null);
+    }
 
   selectPokemon(datosPokemon: Pokemon): void{
 
@@ -204,6 +213,7 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.servicionPokemon.selectedPokemon$.subscribe(pokemon => this.selection = pokemon)
+    console.log(this.authservice.currenUserSig());
     this.callData();  }
 
 }
