@@ -16,7 +16,7 @@
         <div *ngIf="authservice.currenUserSig() === null" class="button2">
           <button class="btn btn-success" routerLink="/login">LogIn</button>
         </div>
-        <div *ngIf="authservice.currenUserSig() !== null"  class="button2">
+        <div *ngIf="authservice.currenUserSig() !== null "  class="button2">
           <span class="btn btn-success" (click)="logout()">LogOut</span>
         </div>
 
