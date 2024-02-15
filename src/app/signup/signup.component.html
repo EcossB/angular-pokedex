@@ -17,18 +17,18 @@
 <div class="MainContainer">
 
     <div class="loginForm">
-        <form class="text-center text-sm p-5" >
+        <form class="text-center text-sm p-5" [formGroup]="formSignUp" (ngSubmit)="onSubmit()">
             <p class="h4 mb-4">Create an account</p>
-            <input type="email" id="defaultLoginFormEmail" class="form-control mb-4 " placeholder="First Name">
-            <input type="email" id="defaultLoginFormEmail" class="form-control mb-4 " placeholder="Last Name">
+            <input type="text" formControlName="name" class="form-control mb-4 " placeholder="First Name">
+            <input type="text" formControlName="last_name" class="form-control mb-4 " placeholder="Last Name">
             <!-- Email -->
-            <input type="email" id="defaultLoginFormEmail" class="form-control mb-4 " placeholder="UserName">
+            <input type="email" formControlName="username" class="form-control mb-4 " placeholder="UserName">
             <!-- Password -->
-            <input type="password" id="defaultLoginFormPassword" class="form-control mb-3" placeholder="Password">
+            <input type="password" formControlName="passwordd" class="form-control mb-3" placeholder="Password">
             <div class="d-flex justify-content-around">
             </div>
             <!-- Sign in button -->
-            <button class="btn btn-success my-4" type="submit">Sign in</button>
+            <button class="btn btn-success my-4" type="submit" >Sign in</button>
             <!-- Register -->
             <p>Already have an account?
               <a href="/login">Log in</a>
