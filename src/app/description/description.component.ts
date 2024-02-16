@@ -5,33 +5,10 @@ import { PokemonServiceService } from '../pokemon-service.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient } from '@angular/common/http';
-import { Moves } from '../home/home.component';
+import { Pokemon } from '../Interfaces/PokemonInterface.interface';
 import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-
-type Name ={
-  english: string,
-  japanese: string,
-  chinese: string,
-  french: string
-};
-
-type Base = {
-  HP: number,
-  Attack: number,
-  Defense: number,
-  "Sp. Attack": number,
-  "Sp. Defense": number,
-  Speed: number
-}
-
-
-interface Pokemon{
-  id: number,
-  //stid: string,
-  name: Name,
-  type: string[],
-  base: Base
-};
+import { RestApiService } from '../rest-api.service';
+import { Moves } from '../Interfaces/moveInterface.interface';
 
 
 @Component({
@@ -53,15 +30,12 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
 
   constructor(private servicionPokemon: PokemonServiceService,
     public http : HttpClient,
-    private changeDetectorRef: ChangeDetectorRef){
-
+    private changeDetectorRef: ChangeDetectorRef,
+    private apiService: RestApiService){
   }
 
-
   padNumberImg(id: number): string {
-  //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
-  //return de las imagenes con la url local return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
-    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+    return this.apiService.getImage(id);
   }
 
   padNumberId (id: number): string{
@@ -69,22 +43,15 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
   }
 
   padNumberSprite(id: number):string {
-
-    //return `http://127.0.0.1/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`; url de mi casa.
-    // `http://172.24.0.152/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`; url de viamar
-    return `http://172.24.0.152/JSON/DATA/sprites/${String(id).padStart(3,'0')}MS.png`;
+    return this.apiService.getsprites(id);
   }
 
 
   callMoves(type: string[]):void{
-
-    // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json
-    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=moves.json
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=moves.json')
+    this.apiService.getMoves()
     .subscribe({
       next: (response: any) =>{
         for(let i = 0; i <= 1; i++){
-          
          (i === 0) ? this.moves1 = response.filter((obj: Moves) => obj.type == type[i]) : this.moves2 = response.filter((obj: Moves) => obj.type == type[i]);
         }
         console.log("array de movimientos: ", this.moves1);
@@ -146,7 +113,6 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
 
 
   ngOnInit(): void {
-    //console.log(this.selectedPokemon$);
     this.selectedPokemon$.subscribe((data) => {
       console.log(data);
       this.pokemon = data;

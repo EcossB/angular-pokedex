@@ -8,6 +8,8 @@ import { DescriptionComponent } from '../description/description.component';
 import { PokemonServiceService } from '../pokemon-service.service';
 import { AuthService } from '../auth.service';
 import { UserLogin } from '../login/userL.interface';
+import { RestApiService } from '../rest-api.service';
+import { Pokemon } from '../Interfaces/PokemonInterface.interface';
 
 
 /**
@@ -36,42 +38,6 @@ import { UserLogin } from '../login/userL.interface';
   }
  */
 
-  type Name ={
-    english: string,
-    japanese: string,
-    chinese: string,
-    french: string
-  };
-
-  type Base = {
-    HP: number,
-    Attack: number,
-    Defense: number,
-    "Sp. Attack": number,
-    "Sp. Defense": number,
-    Speed: number
-  }
-
-
-export interface Pokemon{
-    id: number,
-    //stid: string,
-    name: Name,
-    type: string[],
-    base: Base
-  };
-
-export interface Moves{
-  accuracy: number,
-  category: string,
-  cname: string,
-  ename: string,
-  id: number,
-  jname: string,
-  power: number,
-  pp: number,
-  type: string
-}
 
 @Component({
   selector: 'app-home',
@@ -104,30 +70,23 @@ export class HomeComponent implements OnInit{
   };
 
   userLogged: boolean = false; //si esta falsa esta propiedad es porque el usuario no esta logeado.
-
-  pokemons :Pokemon[] = [];
-
-  idIncrement : number = 65;
-
-  pokemonSelected = this.selectPokemon
+  pokemons :Pokemon[] = []; // to storage pokemons.
+  idIncrement : number = 65; // How many pokemons will be called for each scroll.
+  pokemonSelected = this.selectPokemon  //for behavior subject
   nombrePokemon!: string;
-
   selection!: Pokemon;
-
   authservice = inject(AuthService);
 
   constructor(public http: HttpClient,
     private servicionPokemon: PokemonServiceService,
-    private router: Router){}
+    private router: Router,
+    private apiService: RestApiService){}
 
 
   callData(){
-    // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
-    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+    this.apiService.getPokemon()
     .subscribe({
       next: (response: any) => {
-        //console.log(response);
         this.pokemons = response.filter((obj:Pokemon) => obj.id <= 65);
         console.log(this.pokemons)
       },
@@ -138,9 +97,7 @@ export class HomeComponent implements OnInit{
   }
 
   padNumberImg(id: number) {
-    //return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`; return image con la url de viamar
-  //return de las imagenes con la url local return `http://127.0.0.1/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
-    return `http://172.24.0.152/JSON/DATA/images/${String(id).padStart(3,'0')}.png`;
+    return this.apiService.getImage(id);
   }
 
   padNumberId(id: number){
@@ -149,15 +106,10 @@ export class HomeComponent implements OnInit{
 
 
   onScroll(){
-
     this.idIncrement += 6;
-
-    // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
-    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+    this.apiService.getPokemon()
     .subscribe({
       next: (response: any) => {
-        //console.log(response);
         this.pokemons = response.filter((obj:Pokemon) => obj.id <= this.idIncrement);
         console.log(this.pokemons)
       }});
@@ -171,17 +123,11 @@ export class HomeComponent implements OnInit{
 
 
   searchPokemon(namep :string){
-
-    console.log(this.captilizeString(namep));
-
-        // url del servidor local en viamar: http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json
-    //url del servidor local en mi computador: http://127.0.0.1/JSON/DATA/getjson.php?js=pokedex.json
-    this.http.get('http://172.24.0.152/JSON/DATA/getjson.php?js=pokedex.json')
+    this.apiService.getPokemon()
     .subscribe({
       next: (response: any) => {
         this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
         console.log(this.pokemons);
-
         (this.pokemons.length === 0) ? (alert("Pokemon No encontrado"),  window.location.reload()) : console.log("Pokemon Encontrado");
       },
       error: (error) => {
@@ -196,11 +142,8 @@ export class HomeComponent implements OnInit{
     }
 
   selectPokemon(datosPokemon: Pokemon): void{
-
     this.servicionPokemon.setPokemon(datosPokemon);
-
   }
-
 
   reloadPage() {
     window.location.reload();
