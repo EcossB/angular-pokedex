@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from './userL.interface';
-
+import { RestApiService } from '../rest-api.service';
 
 @Component({
   selector: 'app-login',
@@ -20,17 +20,18 @@ export class LoginComponent {
     router = inject(Router);
 
     constructor(
-      public http: HttpClient
+      public http: HttpClient,
+      private apiService: RestApiService
       ){}
 
     form = this.fb.nonNullable.group({
      username: ['', Validators.required],
      password: ['', Validators.required]
     });
-    
+
+    //
     onSubmit(): void {
-      this.http.post<{user:UserLogin}>('https://localhost:7033/login', 
-      this.form.getRawValue())
+      this.apiService.loginUser(this.form)
       .subscribe((response:any) => {
         console.log("Response", response);
         localStorage.setItem('token', response.token);
