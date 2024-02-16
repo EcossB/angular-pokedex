@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Pokemon } from './home/home.component';
+import { Pokemon } from './Interfaces/PokemonInterface.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 
