@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserLogin } from './login/userL.interface';
+import { FormGroup } from '@angular/forms';
+import { UserRegister } from './signup/userR.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +16,7 @@ export class RestApiService {
   private apiHoast: string = 'http://172.24.0.152/';
   private pokedexUrl: string = `${this.apiHoast}JSON/DATA/getjson.php?js=pokedex.json`;
   private movesUrl: string = `${this.apiHoast}JSON/DATA/getjson.php?js=moves.json`;
-  private apiUserUrl: string = 'https://localhost:7033/login';
+  private apiUserUrl: string = 'https://localhost:7033';
   
 
   getPokemon(){
@@ -33,9 +36,18 @@ export class RestApiService {
   }
 
   /**
-   * 
-   * 
+   * * adding the calls to user api, this url its different from the pokemons. 
+   * * Also these calls are POST instead GET
    */
+
+  loginUser(form: FormGroup){
+    return this.http.post<{user:UserLogin}>(`${this.apiUserUrl}/login`, form.getRawValue());
+  }
+
+  registerUser(form: FormGroup){
+    return this.http.post<{user:UserRegister}>(`${this.apiUserUrl}/register`, form.getRawValue());
+
+  }
 
 
 }
