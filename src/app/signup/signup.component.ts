@@ -4,6 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { UserRegister } from './userR.interface';
 import { AuthService } from '../auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { RestApiService } from '../rest-api.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +19,9 @@ export class SignupComponent {
   authService = inject(AuthService);
   router = inject(Router);
 
-  constructor(public http: HttpClient){}
+  constructor(
+    public http: HttpClient,
+    private apiService: RestApiService ){}
 
 
   formSignUp = this.fb.nonNullable.group({
@@ -29,7 +32,7 @@ export class SignupComponent {
   })
 
     onSubmit() {
-    this.http.post<{user:UserRegister}>('https://localhost:7033/register', this.formSignUp.getRawValue())
+    this.apiService.registerUser(this.formSignUp)
     .subscribe((response:any) => {
       console.log("Response", response);
       localStorage.setItem('token', response.token);
