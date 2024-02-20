@@ -106,13 +106,30 @@ export class HomeComponent implements OnInit{
 
 
   onScroll(){
-    this.idIncrement += 6;
-    this.apiService.getPokemon()
+    // this.idIncrement += 6;
+    // this.apiService.getPokemon()
+    // .subscribe({
+    //   next: (response: any) => {
+    //     this.pokemons = response.filter((obj:Pokemon) => obj.id <= this.idIncrement);
+    //     console.log(this.pokemons)
+    //   }});
+
+    /**
+     * TODO: agregar la logica para que el infinite scroll funcione con las llamadas al endpoint de la api. 
+     */
+
+    this.idIncrement = 61; // numero Inicial del first
+    
+    this.apiService.a_getNextPokemons(this.idIncrement, this.idIncrement + 60 ) //+= para que vaya sumandose por cada scroll
     .subscribe({
-      next: (response: any) => {
-        this.pokemons = response.filter((obj:Pokemon) => obj.id <= this.idIncrement);
-        console.log(this.pokemons)
-      }});
+      next: (response:any) => {
+        this.pokemons += response;
+      }, 
+      error: (error) => {
+        console.log(error);
+      }
+    })
+
   }
 
 
@@ -140,7 +157,7 @@ export class HomeComponent implements OnInit{
     subscribe({
       next: (response: any) => {
         console.log(response);
-        this.pokemons = []
+        this.pokemons = [];
         this.pokemons.push(response);
       },
       error: (error) => {
