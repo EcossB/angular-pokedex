@@ -123,17 +123,31 @@ export class HomeComponent implements OnInit{
 
 
   searchPokemon(namep :string){
-    this.apiService.getPokemon()
-    .subscribe({
+
+    // this.apiService.getPokemon()
+    // .subscribe({
+    //   next: (response: any) => {
+    //     this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
+    //     console.log(this.pokemons);
+    //     (this.pokemons.length === 0) ? (alert("Pokemon No encontrado"),  window.location.reload()) : console.log("Pokemon Encontrado");
+    //   },
+    //   error: (error) => {
+    //     console.log("Error de conexion ", error);
+    //   }
+    // });
+
+    this.apiService.a_getPokemonByName(this.captilizeString(namep)).
+    subscribe({
       next: (response: any) => {
-        this.pokemons = response.filter((obj:Pokemon) => obj.name.english === this.captilizeString(namep));
-        console.log(this.pokemons);
-        (this.pokemons.length === 0) ? (alert("Pokemon No encontrado"),  window.location.reload()) : console.log("Pokemon Encontrado");
+        console.log(response);
+        this.pokemons = []
+        this.pokemons.push(response);
       },
       error: (error) => {
-        console.log("Error de conexion ", error);
+        console.log(error)
       }
-    });
+    })
+
   }
 
   logout() {
@@ -157,7 +171,8 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     this.servicionPokemon.selectedPokemon$.subscribe(pokemon => this.selection = pokemon)
     console.log(this.authservice.currenUserSig());
-    this.callData();  }
+    this.callData(); 
+   }
 
 }
 
