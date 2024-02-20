@@ -84,16 +84,32 @@ export class HomeComponent implements OnInit{
 
 
   callData(){
-    this.apiService.getPokemon()
+
+    // this.apiService.getPokemon()
+    // .subscribe({
+    //   next: (response: any) => {
+    //     this.pokemons = response.filter((obj:Pokemon) => obj.id <= 65);
+    //     console.log(this.pokemons)
+    //   },
+    //   error: (error) => {
+    //     console.log("Error de conexion ", error);
+    //   }
+    // })
+
+    /**
+     * TODO: adding the logic to consume a endpoint from the dotnetApi
+     */
+
+    this.apiService.a_getFirst60()
     .subscribe({
       next: (response: any) => {
-        this.pokemons = response.filter((obj:Pokemon) => obj.id <= 65);
-        console.log(this.pokemons)
-      },
+        this.pokemons = response;
+      }, 
       error: (error) => {
-        console.log("Error de conexion ", error);
+        console.error(error);
       }
     })
+
   }
 
   padNumberImg(id: number) {
@@ -118,12 +134,12 @@ export class HomeComponent implements OnInit{
      * TODO: agregar la logica para que el infinite scroll funcione con las llamadas al endpoint de la api. 
      */
 
-    this.idIncrement = 61; // numero Inicial del first
+    this.idIncrement += 60; // numero Inicial del first
     
-    this.apiService.a_getNextPokemons(this.idIncrement, this.idIncrement + 60 ) //+= para que vaya sumandose por cada scroll
+    this.apiService.a_getNextPokemons(0, this.idIncrement) //+= para que vaya sumandose por cada scroll
     .subscribe({
       next: (response:any) => {
-        this.pokemons += response;
+        this.pokemons = response;
       }, 
       error: (error) => {
         console.log(error);
