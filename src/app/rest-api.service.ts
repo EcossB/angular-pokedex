@@ -14,6 +14,10 @@ export class RestApiService {
   //url del servidor local en mi computador: http://127.0.0.1
   //url de la api https://localhost:7033/api/Pokemon
 
+  /**
+   * * parte que debe de ver con la url de xamp
+   */
+
 
   private apiHoast: string = 'http://172.24.0.152/';
   private pokedexUrl: string = `${this.apiHoast}JSON/DATA/getjson.php?js=pokedex.json`;
@@ -50,6 +54,20 @@ export class RestApiService {
     return this.http.post<{user:UserRegister}>(`${this.apiUserUrl}/register`, form.getRawValue());
 
   }
+
+  /**
+   * * From this point forward adding the api endpoint to be consumed
+   * * if the atribute or method name start with a_ its because it came from the dotnet api.
+   */
+
+  private a_pokemonUrl: string = 'https://localhost:7033/api/Pokemon';
+  private a_nameUrl: string = `${this.a_pokemonUrl}/name?name=`;
+  private a_first60: string = `${this.a_pokemonUrl}/get60`;
+  private a_movesUrl: string = `${this.a_pokemonUrl}/moves`
+  private a_typesUrl: string = `${this.a_pokemonUrl}/movesByType?type=`;
+
+  // method for calling the differents endpoints from the API.
+
 
 
 }
