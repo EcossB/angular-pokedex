@@ -12,6 +12,8 @@ export class RestApiService {
 
   //url del servidor local en viamar: http://172.24.0.152
   //url del servidor local en mi computador: http://127.0.0.1
+  //url de la api https://localhost:7033/api/Pokemon
+
 
   private apiHoast: string = 'http://172.24.0.152/';
   private pokedexUrl: string = `${this.apiHoast}JSON/DATA/getjson.php?js=pokedex.json`;
