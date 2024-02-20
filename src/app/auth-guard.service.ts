@@ -11,8 +11,8 @@ export class AuthGuardService implements CanActivate{
         if(localStorage.getItem('token')){
             return true;
         } else {
-            return false;
             alert("Debes de iniciar Sesion primero.");
+            return false;
         }
     }
 
