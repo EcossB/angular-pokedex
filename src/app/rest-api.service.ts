@@ -68,6 +68,29 @@ export class RestApiService {
 
   // method for calling the differents endpoints from the API.
 
+  a_getAll(){
+    return this.http.get(this.a_pokemonUrl);
+  }
+
+  a_getPokemonByName(name : string){
+    return this.http.get(this.a_nameUrl + name);
+  }
+
+  a_getFirst60(){
+    return this.http.get(this.a_first60);
+  }
+
+  a_getMoves(){
+    return this.http.get(this.a_movesUrl);
+  }
+
+  a_getMovesByType(type: string){
+    return this.http.get(this.a_typesUrl + type);
+  }
+
+  a_getNextPokemons(first: number, limit: number){
+    return this.http.get(`https://localhost:7033/api/Pokemon/Next?first=${first}&limit=${limit}`);
+  }
 
 
 }
