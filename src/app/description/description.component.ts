@@ -111,14 +111,34 @@ export class DescriptionComponent implements OnInit, AfterViewInit{
   }
     
 
+  callPokemonByName(){
+
+    this.selectedPokemon$.subscribe((data) => {
+    console.log(data);
+    this.pokemon = data;
+    console.log('Datos del pokemon: ', this.pokemon);
+    console.log('Base del pokemon: ', this.pokemon.base)
+    })
+
+    this.apiService.a_getPokemonByName(this.pokemon.name.english)
+    .subscribe({
+      next: (response: any) => {
+        this.pokemon = response;
+        console.log("base: ",this.pokemon.base);
+      }
+    })
+  }
+
 
   ngOnInit(): void {
-    this.selectedPokemon$.subscribe((data) => {
-      console.log(data);
-      this.pokemon = data;
-      console.log('Datos del pokemon: ', this.pokemon);
-      console.log('Base del pokemon: ', this.pokemon.base)
-    })
+    // this.selectedPokemon$.subscribe((data) => {
+    //   console.log(data);
+    //   this.pokemon = data;
+    //   console.log('Datos del pokemon: ', this.pokemon);
+    //   console.log('Base del pokemon: ', this.pokemon.base)
+    // })
+
+    this.callPokemonByName();
   }
 
 
