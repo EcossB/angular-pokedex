@@ -24,6 +24,7 @@ export class RestApiService {
   private movesUrl: string = `${this.apiHoast}JSON/DATA/getjson.php?js=moves.json`;
   private apiUserUrl: string = 'https://localhost:7033';
   
+  
 
   getPokemon(){
     return this.http.get(this.pokedexUrl);
@@ -65,8 +66,11 @@ export class RestApiService {
   private a_first60: string = `${this.a_pokemonUrl}/get60`;
   private a_movesUrl: string = `${this.a_pokemonUrl}/moves`
   private a_typesUrl: string = `${this.a_pokemonUrl}/movesByType?type=`;
+  private a_basesUrl: string = `${this.a_pokemonUrl}/bases?name=`
 
   // method for calling the differents endpoints from the API.
+
+  
 
   a_getAll(){
     return this.http.get(this.a_pokemonUrl);
@@ -91,6 +95,10 @@ export class RestApiService {
   a_getNextPokemons(first: number, limit: number){
     return this.http.get(`https://localhost:7033/api/Pokemon/Next?first=${first}&limit=${limit}`);
   }
+  
 
+  a_getBasesByname(name: string){
+    return this.http.get(this.a_basesUrl + name);
+  }
 
 }
