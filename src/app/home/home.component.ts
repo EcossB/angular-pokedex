@@ -60,13 +60,13 @@ export class HomeComponent implements OnInit{
       french: ''
     },
     type: [],
-    base: {
-      HP: 0,
-      Attack: 0,
-      Defense: 0,
-      "Sp. Attack": 0,
-      "Sp. Defense": 0,
-      Speed: 0}
+    Base: {
+      hp: 0,
+      attack: 0,
+      defense: 0,
+      sp_Attack: 0,
+      sp_Defense: 0,
+      speed: 0}
   };
 
   userLogged: boolean = false; //si esta falsa esta propiedad es porque el usuario no esta logeado.

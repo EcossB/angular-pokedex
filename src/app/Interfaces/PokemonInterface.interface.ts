@@ -6,12 +6,12 @@ export type Name ={
 };
 
 export type Base = {
-  HP: number,
-  Attack: number,
-  Defense: number,
-  "Sp. Attack": number,
-  "Sp. Defense": number,
-  Speed: number
+  hp: number,
+  attack: number,
+  defense: number,
+  sp_Attack: number,
+  sp_Defense: number,
+  speed: number
 }
 
 
@@ -19,5 +19,5 @@ export interface Pokemon{
   id: number,
   name: Name,
   type: string[],
-  base: Base
+  Base: Base
 };
