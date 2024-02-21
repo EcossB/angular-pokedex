@@ -45,23 +45,6 @@ export class DescriptionComponent implements OnInit{
     return this.apiService.getsprites(id);
   }
 
-
-  callMoves(type: string[]):void{
-    // this.apiService.getMoves()
-    // .subscribe({
-    //   next: (response: any) =>{
-    //     for(let i = 0; i <= 1; i++){
-    //      (i === 0) ? this.moves1 = response.filter((obj: Moves) => obj.type == type[i]) : this.moves2 = response.filter((obj: Moves) => obj.type == type[i]);
-    //     }
-    //     console.log("array de movimientos: ", this.moves1);
-    //     console.log("array de movimientos 2: ", this.moves2);
-    //   },
-    //   error: (error) =>{
-    //     console.log("Error de conexion para los movimientos", error);
-    //   }
-    // })
-  }
-
   /**
    * *De aqui en adelante se aplica la logica y para el chart.
    */
@@ -152,7 +135,29 @@ export class DescriptionComponent implements OnInit{
     })
   }
 
-  
+  callMoves(type: string[]):void{
+    for(let i = 0; i<2; i++){
+      if(i===0){
+        this.apiService.a_getMovesByType(type[i]).
+        subscribe({
+          next: (response: any) => {
+            console.log(response);
+            this.moves1 = response;
+            console.log(i);
+          }
+        })
+      } else {
+        this.apiService.a_getMovesByType(type[i]).
+        subscribe({
+          next: (response: any) => {
+            console.log(response);
+            this.moves2 = response;
+            console.log(i);
+          }
+        })
+      }
+    }
+  }
 
 
   ngOnInit(): void {
