@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserLogin } from './login/userL.interface';
 import { FormGroup } from '@angular/forms';
 import { UserRegister } from './signup/userR.interface';
@@ -70,14 +70,18 @@ export class RestApiService {
 
   // method for calling the differents endpoints from the API.
 
-  
+  header_object = new HttpHeaders().set("Authorization", "bearer " + localStorage.getItem('token'));
+
+  httpOptions = {
+    headers: this.header_object
+  };
 
   a_getAll(){
     return this.http.get(this.a_pokemonUrl);
   }
 
   a_getPokemonByName(name : string){
-    return this.http.get(this.a_nameUrl + name);
+    return this.http.get(this.a_nameUrl + name, this.httpOptions);
   }
 
   a_getFirst60(){
