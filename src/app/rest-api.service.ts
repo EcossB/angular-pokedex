@@ -97,7 +97,7 @@ export class RestApiService {
   }
 
   a_getNextPokemons(first: number, limit: number){
-    return this.http.get(`https://localhost:7033/api/Pokemon/Next?first=${first}&limit=${limit}`);
+    return this.http.get(`https://localhost:7033/api/Pokemon/Next?pagina=${first}&limitRegistro=${limit}`);
   }
   
 
