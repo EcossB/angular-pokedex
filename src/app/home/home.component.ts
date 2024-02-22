@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit{
 
   userLogged: boolean = false; //si esta falsa esta propiedad es porque el usuario no esta logeado.
   pokemons :Pokemon[] = []; // to storage pokemons.
-  idIncrement : number = 65; // How many pokemons will be called for each scroll.
+  idIncrement : number = 1; // How many pokemons will be called for each scroll.
   pokemonSelected = this.selectPokemon  //for behavior subject
   nombrePokemon!: string;
   selection!: Pokemon;
@@ -103,6 +103,7 @@ export class HomeComponent implements OnInit{
     this.apiService.a_getFirst60()
     .subscribe({
       next: (response: any) => {
+        console.log(response);
         this.pokemons = response;
       }, 
       error: (error) => {
@@ -122,24 +123,17 @@ export class HomeComponent implements OnInit{
 
 
   onScroll(){
-    // this.idIncrement += 6;
-    // this.apiService.getPokemon()
-    // .subscribe({
-    //   next: (response: any) => {
-    //     this.pokemons = response.filter((obj:Pokemon) => obj.id <= this.idIncrement);
-    //     console.log(this.pokemons)
-    //   }});
-
     /**
      * TODO: agregar la logica para que el infinite scroll funcione con las llamadas al endpoint de la api. 
      */
 
-    this.idIncrement += 60; // numero Inicial del first
+    this.idIncrement += 1; // numero Inicial de la pagina
     
-    this.apiService.a_getNextPokemons(0, this.idIncrement) //+= para que vaya sumandose por cada scroll
+    this.apiService.a_getNextPokemons( this.idIncrement , 60) 
     .subscribe({
       next: (response:any) => {
-        this.pokemons = response;
+        console.log(response);
+        this.pokemons = this.pokemons.concat(response);
       }, 
       error: (error) => {
         console.log(error);
