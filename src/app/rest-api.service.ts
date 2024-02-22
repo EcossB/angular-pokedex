@@ -89,11 +89,11 @@ export class RestApiService {
   }
 
   a_getMoves(){
-    return this.http.get(this.a_movesUrl);
+    return this.http.get(this.a_movesUrl, this.httpOptions);
   }
 
   a_getMovesByType(type: string){
-    return this.http.get(this.a_typesUrl + type);
+    return this.http.get(this.a_typesUrl + type, this.httpOptions);
   }
 
   a_getNextPokemons(first: number, limit: number){
@@ -102,7 +102,7 @@ export class RestApiService {
   
 
   a_getBasesByname(name: string){
-    return this.http.get(this.a_basesUrl + name);
+    return this.http.get(this.a_basesUrl + name, this.httpOptions);
   }
 
 }
