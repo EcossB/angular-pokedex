@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit{
   }
 
   padNumberId(id: number){
-    return `N.° ${String(id).padStart(3,'0')}`;
+    return `N. ${String(id).padStart(3,'0')}`;
   }
 
 
